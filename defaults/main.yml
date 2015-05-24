@@ -1,0 +1,8 @@
+squid_service: squid3
+squid_user: proxy
+squid_group: proxy
+squid_interface: eth0
+listen_port: 8080
+listen_interface: "{{ hostvars[inventory_hostname][squid_interface] }}"
+listen_network: "{{ listen_interface.ipv4.network }}/{{ listen_interface.ipv4.netmask }}"
+listen_ip: "{{ listen_interface.ipv4.address }}"

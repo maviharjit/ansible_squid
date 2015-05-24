@@ -1,0 +1,15 @@
+- name: Install squid
+  apt: name=squid
+
+- name: Create cache directory
+  file: name=/var/cache/{{ squid_service }} state=directory mode=0755 owner={{ squid_user }} group={{ squid_group }}
+
+- name: Configure squid
+  template: src=squid.conf.j2 dest=/etc/{{ squid_service }}/squid.conf mode=0644
+  notify: Restart squid service
+
+- name: Enable squid
+  service: name={{ squid_service }} enabled=yes state=started
+
+- name: Set fact on squid listen ip
+  set_fact: squid_listen_ip={{ listen_ip }}

@@ -1,0 +1,18 @@
+negative_dns_ttl 10 seconds
+dns_retransmit_interval 1 seconds
+dns_timeout 1 minute
+# dns_v4_first on
+# do not cache http://example.com/
+acl example_com dstdomain example.com
+acl internal src {{ listen_network }}
+# acl external src 192.168.1.0/255.255.255.0
+acl all src all
+http_port {{ listen_ip }}:{{ listen_port }}
+http_access allow internal
+# http_access allow external
+http_access deny all
+always_direct allow example_com
+maximum_object_size 300 MB
+cache_dir aufs /var/cache/squid 8192 16 256
+access_log daemon:/var/log/squid/access.log squid
+cache_log /var/log/squid/cache.log

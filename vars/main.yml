@@ -1,0 +1,2 @@
+squid_interface: "ansible_{{ squid_interface }}"
+listen_ip: "0.0.0.0"
